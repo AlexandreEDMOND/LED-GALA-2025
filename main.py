@@ -14,10 +14,21 @@ pygame.display.set_caption("LED Matrix – Boutons et Neige")
 clock = pygame.time.Clock()
 clock.tick(30)
 
-# --- Définition de la matrice LED canonique ---
-matrix_width = 104    # nombre de colonnes
-matrix_height = 26  # nombre de lignes
+""" # --- Définition de la matrice LED --- REGLAGEs ALEXT
+matrix_width = 104  # Colonnes
+matrix_height = 26  # Lignes
 
+# Position de la matrice LED Output sur l'écran 
+offset_x = 65
+offset_y = 60 """
+
+# --- Définition de la matrice LED --- REGLAGES THIBAUT
+matrix_width = 104  # Colonnes # Réglage Alext
+matrix_height = 26  # Lignes
+
+# Position de la matrice LED Output sur l'écran 
+offset_x = 83 #réglage Thib
+offset_y = 95
 # La matrice de base contenant les infos de chaque LED (initialement noire)
 led_matrix = [[(0, 0, 0) for _ in range(matrix_width)] for _ in range(matrix_height)]
 
@@ -105,7 +116,7 @@ font = pygame.font.SysFont("Arial", 24)
 
 # --- Définition des vues d'affichage ---
 # 1. Vue native rotatée de -90° (la surface sera tournée, passant de 26x104 à 104x26)
-rotated_view_pos = (65, 60)
+rotated_view_pos = (offset_x, offset_y)
 
 # 2. Vue agrandie x10 (chaque pixel de la matrice devient un carré de 10x10)
 enlarged_view_pos = (300, 50)
