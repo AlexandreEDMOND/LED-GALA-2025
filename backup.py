@@ -44,8 +44,6 @@ led_matrix = [[(0, 0, 0) for _ in range(matrix_width)] for _ in range(matrix_hei
 # Surface pour la matrice LED
 led_surface = pygame.Surface((matrix_width, matrix_height))
 
-current_color = (0, 0, 0)  # Couleur actuelle pour le mode normal
-
 def update_led_surface():
     """Mise à jour de la surface à partir de la matrice LED."""
     for y in range(matrix_height):
@@ -72,7 +70,7 @@ def choose_color():
     colour_picker = UIColourPickerDialog(pygame.Rect(160, 50, 420, 400),
     ui_manager,
     window_title="Change Colour...",
-    initial_colour=current_colour)
+    initial_colour=picker_color)
     return colour_picker
 
 def generate_initial_gradient():
@@ -210,9 +208,9 @@ while running:
             mouse_pos = pygame.mouse.get_pos()
 
             if button0_rect.collidepoint(mouse_pos):  # color picker
-                current_colour = pygame.Color(0, 0, 0) #Couleur par défaut du color picker
-                current_colour = choose_color()
-                mode = "normal"
+                picker_color = pygame.Color(0, 0, 0) #Couleur par défaut du color picker
+                picker_color = choose_color()
+                mode = "color_picker"
 
             elif button1_rect.collidepoint(mouse_pos):  # Rouge
                 current_color = (255, 0, 0)
@@ -274,10 +272,10 @@ while running:
             strobe_value = int((slider_pos - slider_x) / slider_width * (max_value - min_value))
 
         if event.type == pygame_gui.UI_COLOUR_PICKER_COLOUR_PICKED:
-            current_colour = event.colour
+            picker_color = event.colour
             for y in range(matrix_height):
                 for x in range(matrix_width):
-                    led_matrix[y][x] = current_colour
+                    led_matrix[y][x] = picker_color
         
         ui_manager.process_events(event)
 
@@ -304,6 +302,8 @@ while running:
         for y in range(matrix_height):
             for x in range(matrix_width):
                 led_matrix[y][x] = img.get_at((x, y))
+    elif mode == "color_picker":
+        pass
     elif mode == "degrade":
         animate_gradient()
 
